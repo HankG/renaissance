@@ -30,8 +30,8 @@ refs:
       - 'ls "$BUILD_CACHE_DIR"'
       - 'rm -f "$BUILD_CACHE_DIR"/*.jar'
       # Store bundles in cache directory
-      - 'cp --reflink=auto "$RENAISSANCE_JAR" "$CACHED_RENAISSANCE_JAR"'
-      - 'cp --reflink=auto "$RENAISSANCE_JMH_JAR" "$CACHED_RENAISSANCE_JMH_JAR"'
+      - 'cp "$RENAISSANCE_JAR" "$CACHED_RENAISSANCE_JAR"'
+      - 'cp "$RENAISSANCE_JMH_JAR" "$CACHED_RENAISSANCE_JMH_JAR"'
 
   - &bench
     stage: benchmark
@@ -40,9 +40,9 @@ refs:
       - set -e
       # Get bundles from cache or build them
       - mkdir -p $(dirname "$RENAISSANCE_JAR")
-      - if [ -e "$CACHED_RENAISSANCE_JAR" ]; then cp --reflink=auto "$CACHED_RENAISSANCE_JAR" "$RENAISSANCE_JAR"; else ./tools/sbt/bin/sbt assembly; fi
+      - if [ -e "$CACHED_RENAISSANCE_JAR" ]; then cp "$CACHED_RENAISSANCE_JAR" "$RENAISSANCE_JAR"; else ./tools/sbt/bin/sbt assembly; fi
       - mkdir -p $(dirname "$RENAISSANCE_JMH_JAR")
-      - if [ -e "$CACHED_RENAISSANCE_JMH_JAR" ]; then cp --reflink=auto "$CACHED_RENAISSANCE_JMH_JAR" "$RENAISSANCE_JMH_JAR"; else ./tools/sbt/bin/sbt renaissanceJmh/jmh:assembly; fi
+      - if [ -e "$CACHED_RENAISSANCE_JMH_JAR" ]; then cp "$CACHED_RENAISSANCE_JMH_JAR" "$RENAISSANCE_JMH_JAR"; else ./tools/sbt/bin/sbt renaissanceJmh/jmh:assembly; fi
       # Ensure that the JMH bundle contains non-empty BenchmarkList
       - 'test $(unzip -p "$RENAISSANCE_JMH_JAR" META-INF/BenchmarkList | wc -l) -gt 0'
       - 'java -version'
