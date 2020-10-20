@@ -15,6 +15,9 @@ val benchmarkProjects = for {
   // Hint: add .filter(Seq("group1", "group2").contains(_)) to compile
   // selected benchmark groups only (this can significantly speed-up
   // compilation/assembly when debugging the harness).
+  dir <- file("benchmarks")
+    .list()
+    .filter(Seq("actors", "actors212", "actors213").contains(_))
   if dir != null && file("benchmarks/" + dir + "/build.sbt").exists()
 } yield {
   RootProject(uri("benchmarks/" + dir))
