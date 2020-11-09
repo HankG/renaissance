@@ -9,7 +9,7 @@ lazy val actors = (project in file("."))
     libraryDependencies ++= Seq(
       // akka-actor 2.5.32 supports Scala 2.11, 2.12, 2.13
       // akka-actor 2.6.10 supports Scala 2.12, 2.13
-      "com.typesafe.akka" %% "akka-actor" % "2.5.32",
+      "com.typesafe.akka" %% "akka-actor" % "2.5.32"
     )
   )
   .dependsOn(

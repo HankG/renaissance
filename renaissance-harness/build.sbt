@@ -1,6 +1,5 @@
 lazy val renaissanceCore = RootProject(uri("../renaissance-core"))
 
-
 lazy val renaissanceHarness = (project in file("."))
   .settings(
     name := "renaissance-harness",
